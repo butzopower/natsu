@@ -5,14 +5,14 @@ import (
 	"testing"
 )
 
-func TestParsingAUnionReturnsTheTypes(t *testing.T) {
-	terms, err := Parse("natsu/examples/simple/union.Union")
+func TestParsingAUnionReturnsTheTerms(t *testing.T) {
+	result, err := Parse("natsu/examples/simple/union.Union")
 
 	require.NoError(t, err)
 
 	var termNames []string
 
-	for _, term := range terms {
+	for _, term := range result.Terms {
 		termNames = append(termNames, term.String())
 	}
 
@@ -20,4 +20,12 @@ func TestParsingAUnionReturnsTheTypes(t *testing.T) {
 		"natsu/examples/simple/union.A",
 		"natsu/examples/simple/union.B",
 	})
+}
+
+func TestParsingReturnsThePath(t *testing.T) {
+	result, err := Parse("natsu/examples/simple/union.Union")
+
+	require.NoError(t, err)
+
+	require.Equal(t, "natsu/examples/simple/union", result.Path)
 }

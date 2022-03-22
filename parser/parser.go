@@ -8,35 +8,45 @@ import (
 	"strings"
 )
 
-func Parse(path string) ([]*types.Term, error) {
-	var terms []*types.Term
+type Result struct {
+	Terms []*types.Term
+	Path  string
+}
 
-	obj, err := findType(path)
+func Parse(path string) (Result, error) {
+	var result Result
+
+	sourceTypePackage, sourceTypeName, err := splitSourceType(path)
 
 	if err != nil {
-		return terms, err
+		return result, err
+	}
+
+	obj, err := findType(sourceTypePackage, sourceTypeName)
+
+	if err != nil {
+		return result, err
 	}
 
 	unionType, err := extractUnion(obj)
 
 	if err != nil {
-		return terms, err
+		return result, err
 	}
+
+	var terms []*types.Term
 
 	for i := 0; i < unionType.Len(); i++ {
 		terms = append(terms, unionType.Term(i))
 	}
 
-	return terms, nil
+	return Result{
+		Terms: terms,
+		Path:  sourceTypePackage,
+	}, nil
 }
 
-func findType(path string) (types.Object, error) {
-	sourceTypePackage, sourceTypeName, err := splitSourceType(path)
-
-	if err != nil {
-		return nil, err
-	}
-
+func findType(sourceTypePackage, sourceTypeName string) (types.Object, error) {
 	pkg, err := loadPackage(sourceTypePackage)
 
 	if err != nil {

@@ -12,13 +12,13 @@ func main() {
 	}
 	sourceType := os.Args[1]
 
-	terms, err := parser.Parse(sourceType)
+	result, err := parser.Parse(sourceType)
 
 	if err != nil {
 		failErr(err)
 	}
 
-	for _, term := range terms {
+	for _, term := range result.Terms {
 		fmt.Println(term.String(), term.Type())
 	}
 }
