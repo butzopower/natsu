@@ -19,7 +19,7 @@ func main() {
 	}
 
 	for _, term := range result.Terms {
-		fmt.Println(term.String(), term.Type())
+		fmt.Println(term)
 	}
 }
 

@@ -4,19 +4,16 @@ import (
 	"fmt"
 	"go/types"
 	"golang.org/x/tools/go/packages"
+	"natsu/core"
+	"natsu/util"
 	"os"
 	"strings"
 )
 
-type Result struct {
-	Terms []*types.Term
-	Path  string
-}
+func Parse(pathToUnion string) (core.Result, error) {
+	var result core.Result
 
-func Parse(path string) (Result, error) {
-	var result Result
-
-	sourceTypePackage, sourceTypeName, err := splitSourceType(path)
+	sourceTypePackage, sourceTypeName, err := splitSourceType(pathToUnion)
 
 	if err != nil {
 		return result, err
@@ -40,9 +37,33 @@ func Parse(path string) (Result, error) {
 		terms = append(terms, unionType.Term(i))
 	}
 
-	return Result{
-		Terms: terms,
-		Path:  sourceTypePackage,
+	termNames, err := util.MapWithErr(terms, func(term *types.Term) (core.TermPath, error) {
+		full := term.String()
+		pkg, local, splitErr := splitSourceType(full)
+
+		if splitErr != nil {
+			return core.TermPath{}, splitErr
+		}
+
+		return core.TermPath{
+			Full:    full,
+			Package: pkg,
+			Local:   local,
+		}, nil
+	})
+
+	if err != nil {
+		return result, err
+	}
+
+	return core.Result{
+		Path: sourceTypePackage,
+		Union: core.TermPath{
+			Full:    pathToUnion,
+			Package: sourceTypePackage,
+			Local:   sourceTypeName,
+		},
+		Terms: termNames,
 	}, nil
 }
 

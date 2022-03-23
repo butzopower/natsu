@@ -3,6 +3,7 @@ module natsu
 go 1.18
 
 require (
+	github.com/dave/jennifer v1.5.0
 	github.com/stretchr/testify v1.7.1
 	golang.org/x/tools v0.1.10
 )
