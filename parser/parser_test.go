@@ -28,8 +28,8 @@ func TestParsingAUnionReturnsTheTerms(t *testing.T) {
 			Local:   "A",
 		},
 		{
-			Full:    "natsu/examples/simple/union.B",
-			Package: "natsu/examples/simple/union",
+			Full:    "natsu/examples/simple/union/nested.B",
+			Package: "natsu/examples/simple/union/nested",
 			Local:   "B",
 		},
 	})

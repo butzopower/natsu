@@ -3,6 +3,7 @@ package union_test
 import (
 	"github.com/stretchr/testify/require"
 	"natsu/examples/simple/union"
+	"natsu/examples/simple/union/nested"
 	"testing"
 )
 
@@ -11,7 +12,7 @@ func TestInstantiation(t *testing.T) {
 	var tagOfB union.TaggedUnion
 
 	tagOfA = union.UnionOf(union.A{})
-	tagOfB = union.UnionOf(union.B{})
+	tagOfB = union.UnionOf(nested.B{})
 
 	require.NotNil(t, tagOfA)
 	require.NotNil(t, tagOfB)
