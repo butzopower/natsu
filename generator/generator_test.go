@@ -4,6 +4,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"natsu/core"
 	"natsu/generator"
+	"strings"
 	"testing"
 )
 
@@ -24,22 +25,33 @@ var result = core.Result{
 }
 
 func TestItGeneratesAValidFile(t *testing.T) {
-	generated := generator.Generate(result)
-	require.NotContains(t, generated, "PANIC")
+	generate(t)
 }
 
 func TestItGeneratesTheTaggedUnionType(t *testing.T) {
-	generated := generator.Generate(result)
+	generated := generate(t)
 	require.Regexp(t, "type TaggedCoolUnion struct", generated)
 }
 
 func TestItGeneratesTheConstructor(t *testing.T) {
-	generated := generator.Generate(result)
+	generated := generate(t)
 	require.Regexp(t, "CoolUnionOf\\[.* CoolUnion\\]\\(", generated)
 }
 
 func TestItGeneratesTheContainers(t *testing.T) {
-	generated := generator.Generate(result)
+	generated := generate(t)
 	require.Regexp(t, "type containerCoolUnion interface", generated)
 	require.Regexp(t, "type containerTypeA struct", generated)
+}
+
+func generate(t *testing.T) string {
+	var builder strings.Builder
+
+	file := generator.Generate(result)
+
+	err := file.Render(&builder)
+
+	require.NoError(t, err)
+
+	return builder.String()
 }

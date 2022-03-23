@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"natsu/generator"
 	"natsu/parser"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 func main() {
@@ -18,9 +21,17 @@ func main() {
 		failErr(err)
 	}
 
-	for _, term := range result.Terms {
-		fmt.Println(term)
-	}
+	sourceFile := generator.Generate(result)
+
+	goFile := os.Getenv("GOFILE")
+	dir := filepath.Dir(goFile)
+
+	targetFilename := filepath.Join(
+		dir,
+		strings.ToLower(result.Union.Local)+"_sum.go",
+	)
+
+	failErr(sourceFile.Save(targetFilename))
 }
 
 func failErr(err error) {

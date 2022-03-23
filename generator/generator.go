@@ -6,7 +6,7 @@ import (
 	"natsu/core"
 )
 
-func Generate(r core.Result) string {
+func Generate(r core.Result) *File {
 	file := NewFilePath(r.Path)
 
 	containerInterface, containerInterfaceFn := generateContainerInterface(file, r)
@@ -14,7 +14,7 @@ func Generate(r core.Result) string {
 	generateStruct(file, r, containerInterface)
 	generateConstructor(file, r)
 
-	return fmt.Sprintf("%#v", file)
+	return file
 }
 
 func generateContainerInterface(file *File, r core.Result) (string, string) {
