@@ -19,19 +19,19 @@ func TestInstantiation(t *testing.T) {
 }
 
 func TestExecutor(t *testing.T) {
-	//calledWith := "none"
-	//
-	//executor := union.UnionExecutor().
-	//	WithA(func(a union.A) { calledWith = "a" }).
-	//	WithB(func(b nested.B) { calledWith = "b" })
-	//
-	//executor.Exec(union.UnionOf(union.A{}))
-	//
-	//require.Equal(t, "a", calledWith)
-	//
-	//executor.Exec(union.UnionOf(nested.B{}))
-	//
-	//require.Equal(t, "b", calledWith)
+	calledWith := "none"
+
+	executor := union.UnionExecutor().
+		WithA(func(a union.A) { calledWith = "a" }).
+		WithB(func(b nested.B) { calledWith = "b" })
+
+	executor.Exec(union.UnionOf(union.A{}))
+
+	require.Equal(t, "a", calledWith)
+
+	executor.Exec(union.UnionOf(nested.B{}))
+
+	require.Equal(t, "b", calledWith)
 }
 
 func TestShouldNotCompileWithTypeOutsideUnion(t *testing.T) {
