@@ -22,13 +22,14 @@ type execFnContainerStruct struct {
 	Fns containersExecFn
 }
 
-type executorStruct struct {
+type execChainStruct struct {
 	Id            string
 	FnContainerId string
 }
 
 type containersExecFnType map[string]execFnType
 type containersExecFn map[string]execFn
+type containersExecChainStruct map[string]execChainStruct
 
 func generateExecutor(
 	file *File,
@@ -39,11 +40,31 @@ func generateExecutor(
 	execFnTypesMetadata := buildExecFnTypesMetadata(c)
 	execFnContainerStructMetadata := buildExecFnContainerMetadata(r.Union.Local, execFnTypesMetadata)
 	executorStructMetadata := buildExecutorStructMetadata(r.Union.Local)
+	execChainStructsMetadata := buildExecutorChainStructMetadata(r.Union.Local, c)
 
 	generateExecFnTypes(file, execFnTypesMetadata)
 	generateExecFnContainerStruct(file, execFnContainerStructMetadata)
 	generateExecutorStruct(file, executorStructMetadata, execFnContainerStructMetadata.Id)
+	generateExecutorChainStructs(file, execChainStructsMetadata, execFnContainerStructMetadata.Id)
 	generateExecutorExec(file, execFnContainerStructMetadata, executorStructMetadata, sumType)
+}
+
+func buildExecutorChainStructMetadata(
+	namespace string,
+	c containers,
+) containersExecChainStruct {
+	containersToReturn := make(containersExecChainStruct)
+
+	for containerId, term := range c {
+		id := fmt.Sprintf("executor%sChain%s", namespace, term.Local)
+		fnContainerId := "fns"
+		containersToReturn[containerId] = execChainStruct{
+			Id:            id,
+			FnContainerId: fnContainerId,
+		}
+	}
+
+	return containersToReturn
 }
 
 func buildExecFnTypesMetadata(c containers) containersExecFnType {
@@ -86,11 +107,11 @@ func buildExecFnContainerMetadata(
 
 func buildExecutorStructMetadata(
 	namespace string,
-) executorStruct {
+) execChainStruct {
 	id := fmt.Sprintf("executor%s", namespace)
 	containerId := "fns"
 
-	return executorStruct{
+	return execChainStruct{
 		Id:            id,
 		FnContainerId: containerId,
 	}
@@ -115,7 +136,25 @@ func generateExecFnContainerStruct(file *File, s execFnContainerStruct) {
 
 func generateExecutorStruct(
 	file *File,
-	executorStruct executorStruct,
+	executorStruct execChainStruct,
+	execFnContainerStructId string,
+) {
+	generateExecutorChainStruct(file, executorStruct, execFnContainerStructId)
+}
+
+func generateExecutorChainStructs(
+	file *File,
+	containerChainStructs containersExecChainStruct,
+	execFnContainerStructId string,
+) {
+	for _, chainStruct := range containerChainStructs {
+		generateExecutorChainStruct(file, chainStruct, execFnContainerStructId)
+	}
+}
+
+func generateExecutorChainStruct(
+	file *File,
+	executorStruct execChainStruct,
 	execFnContainerStructId string,
 ) {
 	file.Type().Id(executorStruct.Id).Struct(Id(executorStruct.FnContainerId).Id(execFnContainerStructId))
@@ -124,7 +163,7 @@ func generateExecutorStruct(
 func generateExecutorExec(
 	file *File,
 	execFnContainer execFnContainerStruct,
-	executorStruct executorStruct,
+	executorStruct execChainStruct,
 	sumType sumTypeStruct,
 ) {
 	execMethodName := "Exec"
@@ -138,7 +177,7 @@ func generateExecutorExec(
 
 func execSwitchOptions(
 	execFnContainer containersExecFn,
-	executorStruct executorStruct,
+	executorStruct execChainStruct,
 	executorId string,
 	narrowedInstanceId string,
 ) []Code {
