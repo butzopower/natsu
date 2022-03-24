@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"natsu/generator"
-	"natsu/parser"
+	"github.com/butzopower/natsu/generator"
+	"github.com/butzopower/natsu/parser"
 	"os"
 	"path/filepath"
 	"strings"

@@ -1,9 +1,9 @@
 package union_test
 
 import (
+	"github.com/butzopower/natsu/examples/simple/union"
+	"github.com/butzopower/natsu/examples/simple/union/nested"
 	"github.com/stretchr/testify/require"
-	"natsu/examples/simple/union"
-	"natsu/examples/simple/union/nested"
 	"testing"
 )
 

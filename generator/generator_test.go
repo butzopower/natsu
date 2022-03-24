@@ -1,9 +1,9 @@
 package generator_test
 
 import (
+	"github.com/butzopower/natsu/core"
+	"github.com/butzopower/natsu/generator"
 	"github.com/stretchr/testify/require"
-	"natsu/core"
-	"natsu/generator"
 	"strings"
 	"testing"
 )

@@ -1,44 +1,44 @@
 package parser
 
 import (
+	"github.com/butzopower/natsu/core"
 	"github.com/stretchr/testify/require"
-	"natsu/core"
 	"testing"
 )
 
 func TestParsingAUnionReturnsTheUnion(t *testing.T) {
-	result, err := Parse("natsu/examples/simple/union.Union")
+	result, err := Parse("github.com/butzopower/natsu/examples/simple/union.Union")
 
 	require.NoError(t, err)
 
-	require.Equal(t, "natsu/examples/simple/union.Union", result.Union.Full)
-	require.Equal(t, "natsu/examples/simple/union", result.Union.Package)
+	require.Equal(t, "github.com/butzopower/natsu/examples/simple/union.Union", result.Union.Full)
+	require.Equal(t, "github.com/butzopower/natsu/examples/simple/union", result.Union.Package)
 	require.Equal(t, "Union", result.Union.Local)
 }
 
 func TestParsingAUnionReturnsTheTerms(t *testing.T) {
-	result, err := Parse("natsu/examples/simple/union.Union")
+	result, err := Parse("github.com/butzopower/natsu/examples/simple/union.Union")
 
 	require.NoError(t, err)
 
 	require.ElementsMatch(t, result.Terms, []core.TermPath{
 		{
-			Full:    "natsu/examples/simple/union.A",
-			Package: "natsu/examples/simple/union",
+			Full:    "github.com/butzopower/natsu/examples/simple/union.A",
+			Package: "github.com/butzopower/natsu/examples/simple/union",
 			Local:   "A",
 		},
 		{
-			Full:    "natsu/examples/simple/union/nested.B",
-			Package: "natsu/examples/simple/union/nested",
+			Full:    "github.com/butzopower/natsu/examples/simple/union/nested.B",
+			Package: "github.com/butzopower/natsu/examples/simple/union/nested",
 			Local:   "B",
 		},
 	})
 }
 
 func TestParsingReturnsThePath(t *testing.T) {
-	result, err := Parse("natsu/examples/simple/union.Union")
+	result, err := Parse("github.com/butzopower/natsu/examples/simple/union.Union")
 
 	require.NoError(t, err)
 
-	require.Equal(t, "natsu/examples/simple/union", result.Path)
+	require.Equal(t, "github.com/butzopower/natsu/examples/simple/union", result.Path)
 }

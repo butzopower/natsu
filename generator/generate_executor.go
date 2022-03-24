@@ -2,8 +2,8 @@ package generator
 
 import (
 	"fmt"
+	"github.com/butzopower/natsu/core"
 	. "github.com/dave/jennifer/jen"
-	"natsu/core"
 )
 
 type execFnType struct {

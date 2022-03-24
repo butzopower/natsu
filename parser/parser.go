@@ -2,10 +2,10 @@ package parser
 
 import (
 	"fmt"
+	"github.com/butzopower/natsu/core"
+	"github.com/butzopower/natsu/util"
 	"go/types"
 	"golang.org/x/tools/go/packages"
-	"natsu/core"
-	"natsu/util"
 	"os"
 	"strings"
 )

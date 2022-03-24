@@ -1,4 +1,4 @@
-module natsu
+module github.com/butzopower/natsu
 
 go 1.18
 
