@@ -10,16 +10,10 @@ import (
 	"strings"
 )
 
-func Parse(pathToUnion string) (core.Result, error) {
+func Parse(unionPackageName, unionTypeName string) (core.Result, error) {
 	var result core.Result
 
-	sourceTypePackage, sourceTypeName, err := splitSourceType(pathToUnion)
-
-	if err != nil {
-		return result, err
-	}
-
-	obj, err := findType(sourceTypePackage, sourceTypeName)
+	obj, err := findType(unionPackageName, unionTypeName)
 
 	if err != nil {
 		return result, err
@@ -46,7 +40,6 @@ func Parse(pathToUnion string) (core.Result, error) {
 		}
 
 		return core.TermPath{
-			Full:    full,
 			Package: pkg,
 			Local:   local,
 		}, nil
@@ -57,11 +50,10 @@ func Parse(pathToUnion string) (core.Result, error) {
 	}
 
 	return core.Result{
-		Path: sourceTypePackage,
+		Path: unionPackageName,
 		Union: core.TermPath{
-			Full:    pathToUnion,
-			Package: sourceTypePackage,
-			Local:   sourceTypeName,
+			Package: unionPackageName,
+			Local:   unionTypeName,
 		},
 		Terms: termNames,
 	}, nil

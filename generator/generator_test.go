@@ -11,7 +11,6 @@ import (
 var result = core.Result{
 	Path: "some/pkg",
 	Union: core.TermPath{
-		Full:    "some/pkg.CoolUnion",
 		Package: "some/pkg",
 		Local:   "CoolUnion",
 	},
@@ -19,7 +18,6 @@ var result = core.Result{
 		{
 			Local:   "TypeA",
 			Package: "some/pkg",
-			Full:    "some/pkg.TypeA",
 		},
 	},
 }

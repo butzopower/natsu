@@ -10,12 +10,13 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 2 {
-		failErr(fmt.Errorf("expected exactly one argument: <source type>"))
+	if len(os.Args) != 3 {
+		failErr(fmt.Errorf("expected exactly two arguments: <union pkg> <union type>"))
 	}
-	sourceType := os.Args[1]
+	sourcePkg := os.Args[1]
+	sourceType := os.Args[2]
 
-	result, err := parser.Parse(sourceType)
+	result, err := parser.Parse(sourcePkg, sourceType)
 
 	if err != nil {
 		failErr(err)

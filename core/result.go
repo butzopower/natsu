@@ -9,5 +9,4 @@ type Result struct {
 type TermPath struct {
 	Local   string
 	Package string
-	Full    string
 }
