@@ -96,7 +96,7 @@ func extractUnion(obj types.Object) (*types.Union, error) {
 }
 
 func loadPackage(path string) (*packages.Package, error) {
-	cfg := &packages.Config{Mode: packages.NeedTypes | packages.NeedImports}
+	cfg := &packages.Config{Mode: packages.NeedTypes | packages.NeedImports | packages.NeedTypesInfo}
 	pkgs, err := packages.Load(cfg, path)
 	if err != nil {
 		return nil, fmt.Errorf("loading packages for inspection: %v", err)

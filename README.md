@@ -18,8 +18,8 @@ package models
 type Cat struct { NumLives int }
 type Dog struct { Tricks []string }
 
-//go:generate go run github.com/butzopower/natsu my/package/models P Pet
-type P interface {
+//go:generate go run github.com/butzopower/natsu my/package/models pet Pet
+type pet interface {
     Cat | Dog
 }
 ```
