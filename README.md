@@ -36,7 +36,7 @@ func main() {
     petDog := models.PetOf(models.Dog{ Tricks: []string{"sit", "stay"}})
     
     exec := models.PetExecutor().
-        WithCat(func(cat models.Cat) { println("the cat has " + cat.NumLivs + " lives")}).
+        WithCat(func(cat models.Cat) { println("the cat has " + cat.NumLives + " lives")}).
         WithDog(func(dog models.Dog) { 
             println("our dog knows the following tricks:")
             for _, trick := range dog.Tricks {
