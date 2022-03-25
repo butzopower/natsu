@@ -32,9 +32,12 @@ package main
 import "my/packages/models"
 
 func main() {
-    petCat := models.PetOf(models.Cat{ NumLives: 9})
-    petDog := models.PetOf(models.Dog{ Tricks: []string{"sit", "stay"}})
-    
+    var petCat models.Pet
+    var petDog models.Pet
+
+    petCat = models.PetOf(models.Cat{NumLives: 9})
+    petDog = models.PetOf(models.Dog{Tricks: []string{"sit", "stay"}})
+
     exec := models.PetExecutor().
         WithCat(func(cat models.Cat) { println("the cat has " + cat.NumLives + " lives")}).
         WithDog(func(dog models.Dog) { 
