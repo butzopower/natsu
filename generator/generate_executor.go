@@ -60,7 +60,7 @@ func generateExecutor(
 	sumType sumTypeStruct,
 ) {
 	namespace := sumType.Id
-	execFnTypesMetadata := buildExecFnTypesMetadata(c)
+	execFnTypesMetadata := buildExecFnTypesMetadata(namespace, c)
 	execFnContainerStructMetadata := buildExecFnContainerMetadata(namespace, execFnTypesMetadata)
 	executorStructMetadata := buildExecutorStructMetadata(namespace)
 	execChainStructsMetadata := buildExecutorChainStructMetadata(namespace, c)
@@ -94,11 +94,11 @@ func buildExecutorChainStructMetadata(
 	return containersToReturn
 }
 
-func buildExecFnTypesMetadata(c containers) containersExecFnType {
+func buildExecFnTypesMetadata(namespace string, c containers) containersExecFnType {
 	containersToReturn := make(containersExecFnType)
 
 	for containerId, term := range c {
-		functionTypeName := fmt.Sprintf("execFn%sFn", term.Local)
+		functionTypeName := fmt.Sprintf("execFn%s%sFn", namespace, term.Local)
 
 		containersToReturn[containerId] = execFnType{
 			Term:       term,

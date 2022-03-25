@@ -27,22 +27,6 @@ func TestItGeneratesAValidFile(t *testing.T) {
 	generate(t)
 }
 
-func TestItGeneratesTheTaggedUnionType(t *testing.T) {
-	generated := generate(t)
-	require.Regexp(t, "type CoolUnion struct", generated)
-}
-
-func TestItGeneratesTheConstructor(t *testing.T) {
-	generated := generate(t)
-	require.Regexp(t, "CoolUnionOf\\[.* Union\\]\\(", generated)
-}
-
-func TestItGeneratesTheContainers(t *testing.T) {
-	generated := generate(t)
-	require.Regexp(t, "type containerCoolUnion interface", generated)
-	require.Regexp(t, "type containerTypeA struct", generated)
-}
-
 func generate(t *testing.T) string {
 	var builder strings.Builder
 
