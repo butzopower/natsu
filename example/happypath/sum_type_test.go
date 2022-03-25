@@ -1,18 +1,18 @@
-package union_test
+package happypath_test
 
 import (
-	"github.com/butzopower/natsu/examples/simple/union"
-	"github.com/butzopower/natsu/examples/simple/union/nested"
+	"github.com/butzopower/natsu/example/happypath"
+	"github.com/butzopower/natsu/example/happypath/nested"
 	"github.com/stretchr/testify/require"
 	"testing"
 )
 
 func TestInstantiation(t *testing.T) {
-	var tagOfA union.SumType
-	var tagOfB union.SumType
+	var tagOfA happypath.SumType
+	var tagOfB happypath.SumType
 
-	tagOfA = union.SumTypeOf(union.A{})
-	tagOfB = union.SumTypeOf(nested.B{})
+	tagOfA = happypath.SumTypeOf(happypath.A{})
+	tagOfB = happypath.SumTypeOf(nested.B{})
 
 	require.NotNil(t, tagOfA)
 	require.NotNil(t, tagOfB)
@@ -21,15 +21,15 @@ func TestInstantiation(t *testing.T) {
 func TestExecutor(t *testing.T) {
 	calledWith := "none"
 
-	executor := union.SumTypeExecutor().
-		WithA(func(a union.A) { calledWith = "a" }).
+	executor := happypath.SumTypeExecutor().
+		WithA(func(a happypath.A) { calledWith = "a" }).
 		WithB(func(b nested.B) { calledWith = "b" })
 
-	executor.Exec(union.SumTypeOf(union.A{}))
+	executor.Exec(happypath.SumTypeOf(happypath.A{}))
 
 	require.Equal(t, "a", calledWith)
 
-	executor.Exec(union.SumTypeOf(nested.B{}))
+	executor.Exec(happypath.SumTypeOf(nested.B{}))
 
 	require.Equal(t, "b", calledWith)
 }
