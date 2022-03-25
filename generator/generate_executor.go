@@ -56,11 +56,10 @@ type containersExecChainStruct map[string]execChainStruct
 
 func generateExecutor(
 	file *File,
-	r core.Result,
 	c containers,
 	sumType sumTypeStruct,
 ) {
-	namespace := r.Union.Local
+	namespace := sumType.Id
 	execFnTypesMetadata := buildExecFnTypesMetadata(c)
 	execFnContainerStructMetadata := buildExecFnContainerMetadata(namespace, execFnTypesMetadata)
 	executorStructMetadata := buildExecutorStructMetadata(namespace)

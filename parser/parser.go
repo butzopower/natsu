@@ -10,8 +10,8 @@ import (
 	"strings"
 )
 
-func Parse(unionPackageName, unionTypeName string) (core.Result, error) {
-	var result core.Result
+func Parse(unionPackageName, unionTypeName string) (core.UnionDetails, error) {
+	var result core.UnionDetails
 
 	obj, err := findType(unionPackageName, unionTypeName)
 
@@ -49,7 +49,7 @@ func Parse(unionPackageName, unionTypeName string) (core.Result, error) {
 		return result, err
 	}
 
-	return core.Result{
+	return core.UnionDetails{
 		Path: unionPackageName,
 		Union: core.TermPath{
 			Package: unionPackageName,

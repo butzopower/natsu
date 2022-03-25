@@ -8,11 +8,12 @@ import (
 	"testing"
 )
 
-var result = core.Result{
+var sumTypeName = "CoolUnion"
+var result = core.UnionDetails{
 	Path: "some/pkg",
 	Union: core.TermPath{
 		Package: "some/pkg",
-		Local:   "CoolUnion",
+		Local:   "Union",
 	},
 	Terms: []core.TermPath{
 		{
@@ -28,12 +29,12 @@ func TestItGeneratesAValidFile(t *testing.T) {
 
 func TestItGeneratesTheTaggedUnionType(t *testing.T) {
 	generated := generate(t)
-	require.Regexp(t, "type TaggedCoolUnion struct", generated)
+	require.Regexp(t, "type CoolUnion struct", generated)
 }
 
 func TestItGeneratesTheConstructor(t *testing.T) {
 	generated := generate(t)
-	require.Regexp(t, "CoolUnionOf\\[.* CoolUnion\\]\\(", generated)
+	require.Regexp(t, "CoolUnionOf\\[.* Union\\]\\(", generated)
 }
 
 func TestItGeneratesTheContainers(t *testing.T) {
@@ -45,7 +46,7 @@ func TestItGeneratesTheContainers(t *testing.T) {
 func generate(t *testing.T) string {
 	var builder strings.Builder
 
-	file := generator.Generate(result)
+	file := generator.Generate(sumTypeName, result)
 
 	err := file.Render(&builder)
 

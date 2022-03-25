@@ -1,6 +1,6 @@
 package core
 
-type Result struct {
+type UnionDetails struct {
 	Union TermPath
 	Path  string
 	Terms []TermPath

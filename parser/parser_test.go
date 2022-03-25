@@ -7,16 +7,16 @@ import (
 )
 
 func TestParsingAUnionReturnsTheUnion(t *testing.T) {
-	result, err := Parse("github.com/butzopower/natsu/examples/simple/union", "Union")
+	result, err := Parse("github.com/butzopower/natsu/examples/simple/union", "U")
 
 	require.NoError(t, err)
 
 	require.Equal(t, "github.com/butzopower/natsu/examples/simple/union", result.Union.Package)
-	require.Equal(t, "Union", result.Union.Local)
+	require.Equal(t, "U", result.Union.Local)
 }
 
 func TestParsingAUnionReturnsTheTerms(t *testing.T) {
-	result, err := Parse("github.com/butzopower/natsu/examples/simple/union", "Union")
+	result, err := Parse("github.com/butzopower/natsu/examples/simple/union", "U")
 
 	require.NoError(t, err)
 
@@ -33,7 +33,7 @@ func TestParsingAUnionReturnsTheTerms(t *testing.T) {
 }
 
 func TestParsingReturnsThePath(t *testing.T) {
-	result, err := Parse("github.com/butzopower/natsu/examples/simple/union", "Union")
+	result, err := Parse("github.com/butzopower/natsu/examples/simple/union", "U")
 
 	require.NoError(t, err)
 

@@ -10,26 +10,27 @@ import (
 )
 
 func main() {
-	if len(os.Args) != 3 {
-		failErr(fmt.Errorf("expected exactly two arguments: <union pkg> <union type>"))
+	if len(os.Args) != 4 {
+		failErr(fmt.Errorf("expected exactly two arguments: <pkg> <original union type> <name to generate>"))
 	}
 	sourcePkg := os.Args[1]
 	sourceType := os.Args[2]
+	nameToGenerate := os.Args[3]
 
-	result, err := parser.Parse(sourcePkg, sourceType)
+	unionDetails, err := parser.Parse(sourcePkg, sourceType)
 
 	if err != nil {
 		failErr(err)
 	}
 
-	sourceFile := generator.Generate(result)
+	sourceFile := generator.Generate(nameToGenerate, unionDetails)
 
 	goFile := os.Getenv("GOFILE")
 	dir := filepath.Dir(goFile)
 
 	targetFilename := filepath.Join(
 		dir,
-		strings.ToLower(result.Union.Local)+"_sum.go",
+		strings.ToLower(nameToGenerate)+".go",
 	)
 
 	failErr(sourceFile.Save(targetFilename))

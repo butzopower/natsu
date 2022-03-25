@@ -8,8 +8,8 @@ import (
 )
 
 func TestInstantiation(t *testing.T) {
-	var tagOfA union.TaggedUnion
-	var tagOfB union.TaggedUnion
+	var tagOfA union.Union
+	var tagOfB union.Union
 
 	tagOfA = union.UnionOf(union.A{})
 	tagOfB = union.UnionOf(nested.B{})
@@ -37,7 +37,7 @@ func TestExecutor(t *testing.T) {
 func TestShouldNotCompileWithTypeOutsideUnion(t *testing.T) {
 	// uncomment to show code has errors
 
-	// var shouldNotWork union.TaggedUnion
+	// var shouldNotWork union.Union
 	// shouldNotWork = union.UnionOf(union.C{})
 	// require.NotNil(t, shouldNotWork)
 }
