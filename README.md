@@ -24,7 +24,7 @@ type Pet interface {
 }
 
 func Cuddle[T Pet](pet T) {
-    var switchablePet interface{}
+    var switchablePet interface{} // ❌ required as cannot switch on type constraint
     switchablePet = pet
     switch p := switchablePet.(type) {
     case Cat:
@@ -35,11 +35,9 @@ func Cuddle[T Pet](pet T) {
         if !p.Trained {
             print("ah, it slobbered me")
         }
-    case string:
-        // shouldn't be matchable
+    case string: // ❌ allowed as can not check exhaustively
         print("uh wut")
-    default:
-        // shouldn't be required
+    default:     // ❌ required as can not check exhaustively
         print("there is no pet?")
     }
 }
@@ -48,7 +46,7 @@ func main() {
     Cuddle(Cat{Name: "Tex", SharpClaws: true})
     Cuddle(Dog{Name: "Fifi", Trained: false})
     
-    // does not compile: string does not implement Pet 
+    // ✅ does not compile: string does not implement Pet 
     Cuddle("strings are what cats play with")
 }
 
