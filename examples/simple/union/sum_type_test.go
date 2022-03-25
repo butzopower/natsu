@@ -8,11 +8,11 @@ import (
 )
 
 func TestInstantiation(t *testing.T) {
-	var tagOfA union.Union
-	var tagOfB union.Union
+	var tagOfA union.SumType
+	var tagOfB union.SumType
 
-	tagOfA = union.UnionOf(union.A{})
-	tagOfB = union.UnionOf(nested.B{})
+	tagOfA = union.SumTypeOf(union.A{})
+	tagOfB = union.SumTypeOf(nested.B{})
 
 	require.NotNil(t, tagOfA)
 	require.NotNil(t, tagOfB)
@@ -21,23 +21,23 @@ func TestInstantiation(t *testing.T) {
 func TestExecutor(t *testing.T) {
 	calledWith := "none"
 
-	executor := union.UnionExecutor().
+	executor := union.SumTypeExecutor().
 		WithA(func(a union.A) { calledWith = "a" }).
 		WithB(func(b nested.B) { calledWith = "b" })
 
-	executor.Exec(union.UnionOf(union.A{}))
+	executor.Exec(union.SumTypeOf(union.A{}))
 
 	require.Equal(t, "a", calledWith)
 
-	executor.Exec(union.UnionOf(nested.B{}))
+	executor.Exec(union.SumTypeOf(nested.B{}))
 
 	require.Equal(t, "b", calledWith)
 }
 
-func TestShouldNotCompileWithTypeOutsideUnion(t *testing.T) {
+func TestShouldNotCompileWithTypeOutsideSumType(t *testing.T) {
 	// uncomment to show code has errors
 
-	// var shouldNotWork union.Union
-	// shouldNotWork = union.UnionOf(union.C{})
+	// var shouldNotWork union.SumType
+	// shouldNotWork = union.SumTypeOf(union.C{})
 	// require.NotNil(t, shouldNotWork)
 }

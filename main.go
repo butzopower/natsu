@@ -6,6 +6,7 @@ import (
 	"github.com/butzopower/natsu/parser"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -27,11 +28,9 @@ func main() {
 
 	goFile := os.Getenv("GOFILE")
 	dir := filepath.Dir(goFile)
+	filename := fmt.Sprintf("%s.go", toSnakeCase(nameToGenerate))
 
-	targetFilename := filepath.Join(
-		dir,
-		strings.ToLower(nameToGenerate)+".go",
-	)
+	targetFilename := filepath.Join(dir, filename)
 
 	failErr(sourceFile.Save(targetFilename))
 }
@@ -41,4 +40,13 @@ func failErr(err error) {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(1)
 	}
+}
+
+var matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
+var matchAllCap = regexp.MustCompile("([a-z0-9])([A-Z])")
+
+func toSnakeCase(str string) string {
+	snake := matchFirstCap.ReplaceAllString(str, "${1}_${2}")
+	snake = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
+	return strings.ToLower(snake)
 }
