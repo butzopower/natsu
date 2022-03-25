@@ -32,23 +32,25 @@ package main
 import "my/packages/models"
 
 func main() {
-	petCat := models.PetOf(models.Cat{ NumLives: 9})
-	petDog := models.PetOf(models.Dog{ Tricks: []string{"sit", "stay"}})
-	
-	exec := models.PetExecutor().
-	    WithCat(func(cat models.Cat) { println("the cat has " + cat.NumLivs + " lives")}).
-		WithDog(func(dog models.Dog) { 
-			println("our dog knows the following tricks:")
-			for _, trick := range dog.Tricks {
-				println(" - " + trick)
+    petCat := models.PetOf(models.Cat{ NumLives: 9})
+    petDog := models.PetOf(models.Dog{ Tricks: []string{"sit", "stay"}})
+    
+    exec := models.PetExecutor().
+        WithCat(func(cat models.Cat) { println("the cat has " + cat.NumLivs + " lives")}).
+        WithDog(func(dog models.Dog) { 
+            println("our dog knows the following tricks:")
+            for _, trick := range dog.Tricks {
+                println(" - " + trick)
             }
-		})
-	
-	exec.Exec(petCat) // output: the cat has 9 lives
-	
-	exec.Exec(petDog) // output: our dog knows the following tricks:
-	                  //          - sit
-	                  //          - stay
+        })
+    
+    exec.Exec(petCat) // output: 
+                      // the cat has 9 lives
+    
+    exec.Exec(petDog) // output: 
+                      // our dog knows the following tricks:
+                      //  - sit
+                      //  - stay
 }
 
 ```
