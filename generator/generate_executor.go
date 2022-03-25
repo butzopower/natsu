@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/butzopower/natsu/core"
 	. "github.com/dave/jennifer/jen"
+	"sort"
 )
 
 type execFnType struct {
@@ -174,6 +175,10 @@ func buildExecutorChainFnMetadata(
 
 		chainFns = append(chainFns, chainFn)
 	}
+
+	sort.Slice(chainFns, func(i, j int) bool {
+		return chainFns[i].Id < chainFns[j].Id
+	})
 
 	thisId := "chain"
 	paramId := "fn"
