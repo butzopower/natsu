@@ -104,3 +104,7 @@ func main() {
 }
 
 ```
+
+## Inspiring Projects
+
+* [enumer](https://github.com/dmarkham/enumer)
