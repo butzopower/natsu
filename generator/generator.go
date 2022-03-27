@@ -70,7 +70,6 @@ func generateConstructor(
 	typeId := "T"
 	constructorId := fmt.Sprintf("%sOf", sumType.Id)
 	paramName := "input"
-	switchOn := "switchOn"
 	valueName := "value"
 
 	file.Line()
@@ -81,9 +80,7 @@ func generateConstructor(
 		Params(Id(paramName).Id(typeId)).
 		Id(sumType.Id).
 		Block(
-			Var().Id(switchOn).Interface(),
-			Id(switchOn).Op("=").Id(paramName),
-			Switch(Id(valueName).Op(":=").Id(switchOn).Dot("").Parens(Type())).Block(constructorSwitchOptions(c, valueName, constructorId, sumType)...),
+			Switch(Id(valueName).Op(":=").Id("any").Call(Id(paramName)).Dot("").Parens(Type())).Block(constructorSwitchOptions(c, valueName, constructorId, sumType)...),
 		)
 }
 

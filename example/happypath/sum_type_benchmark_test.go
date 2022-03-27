@@ -49,10 +49,7 @@ type union interface {
 }
 
 func executorGoImpl[T union](u T) {
-	var switchable interface{}
-	switchable = u
-
-	switch t := switchable.(type) {
+	switch t := any(u).(type) {
 	case happypath.A:
 		fmt.Sprintf("%+v", t)
 	case *nested.B:

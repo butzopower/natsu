@@ -102,9 +102,7 @@ type Pet interface {
 }
 
 func Cuddle[T Pet](pet T) {
-    var switchablePet interface{} // ❌ required as can not switch on type constraint
-    switchablePet = pet
-    switch p := switchablePet.(type) {
+    switch p := any(pet).(type) { //  ❌ required as can not switch on type constraint
     case Cat:
         if p.SharpClaws {
             print("ow, it scratched me")
