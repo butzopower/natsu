@@ -3,6 +3,11 @@ test:
 	go generate './...'
 	go test './...'
 
+benchmark:
+	go clean -testcache './...'
+	go generate './...'
+	 go test -run=XXX -bench=. ./...
+
 clean:
 	-rm -r ./cli/build
 
