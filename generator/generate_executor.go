@@ -67,6 +67,9 @@ func generateExecutor(
 	execChainFnMetadata := buildExecutorChainFnMetadata(execFnContainerStructMetadata, execChainStructsMetadata, executorStructMetadata)
 	execConstructorFnMetadata := buildExecutorConstructorFnMetadata(namespace, execChainFnMetadata[0], execFnContainerStructMetadata)
 
+	file.Line()
+	file.Comment("Executor")
+
 	generateExecFnTypes(file, execFnTypesMetadata)
 	generateExecFnContainerStruct(file, execFnContainerStructMetadata)
 	generateExecutorStruct(file, executorStructMetadata, execFnContainerStructMetadata.Id)

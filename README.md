@@ -54,6 +54,28 @@ func main() {
                       // our dog knows the following tricks:
                       //  - sit
                       //  - stay
+
+    mapFn := models.PetMapper[string]().
+        WithCat(func(cat models.Cat) string { 
+            return "<div class=\"cat\">Lives: " + cat.NumLives + "</div>"
+        }).
+        WithDog(func(dog models.Dog) string {
+            var sb strings.Builder
+            sb.WriteString("<ul>")
+
+            for _, trick := range dog.Tricks {
+                sb.WriteString("<li>" + trick + "</li>")
+            }
+
+            sb.WriteString("</ul>")
+            return sb.String()
+        })
+
+    catElement := mapFn.Map(petCat)
+    dogElement := mapFn.Map(petCat)
+
+    print(catElement) // <div class="cat">Lives: 9</div>
+    print(dogElement) // <ul><li>sit</li><li>stay</li></ul>
 }
 
 ```

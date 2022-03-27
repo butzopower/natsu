@@ -20,8 +20,10 @@ func Generate(sumTypeId string, union core.UnionDetails) *File {
 	containerInterface, containerInterfaceFn := generateContainerInterface(file, sumTypeId)
 	containers := generateContainers(file, sumTypeId, union.Terms, containerInterfaceFn)
 	sumType := generateStruct(file, sumTypeId, containerInterface)
+
 	generateConstructor(file, union, containers, sumType)
 	generateExecutor(file, containers, sumType)
+	generateMapper(file, containers, sumType)
 
 	return file
 }
@@ -70,6 +72,9 @@ func generateConstructor(
 	paramName := "input"
 	switchOn := "switchOn"
 	valueName := "value"
+
+	file.Line()
+	file.Comment("Of")
 
 	file.Func().Id(constructorId).
 		Types(Id(typeId).Qual(union.Union.Package, union.Union.Local)).
