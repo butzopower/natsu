@@ -50,7 +50,7 @@ func generateContainers(
 	for _, term := range unionTerms {
 		memberContainerId := fmt.Sprintf("container%s%s", namespace, term.Local)
 		file.Type().Id(memberContainerId).Struct(
-			Id("v").Qual(term.Package, term.Local),
+			Id("v").Add(qualifiedTerm(term)),
 		)
 
 		file.Func().Params(Id("c").Id(memberContainerId)).Id(interfaceFn).Params().Block()
@@ -96,7 +96,7 @@ func constructorSwitchOptions(
 	var options []Code
 
 	for containerId, term := range c {
-		var caseStatement = Case(Qual(term.Package, term.Local)).Block(
+		var caseStatement = Case(qualifiedTerm(term)).Block(
 			Return(Id(sumType.Id).Values(Id(containerId).Values(Id(valueName)))),
 		)
 

@@ -33,10 +33,12 @@ func TestParsingAUnionReturnsTheTerms(t *testing.T) {
 		{
 			Package: "github.com/butzopower/natsu/parser/testdata",
 			Local:   "A",
+			Pointer: false,
 		},
 		{
 			Package: "github.com/butzopower/natsu/parser/testdata/nested",
 			Local:   "B",
+			Pointer: true,
 		},
 	})
 }

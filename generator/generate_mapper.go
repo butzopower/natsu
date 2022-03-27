@@ -236,7 +236,7 @@ func buildMapperConstructorFnMetadata(
 
 func generateMapFnTypes(file *File, c containersMapFnType) {
     for _, fn := range c {
-        file.Type().Id(fn.FnTypeName).Types(Id(genericKey).Any()).Func().Params(Id("x").Qual(fn.Term.Package, fn.Term.Local)).Id(genericKey)
+        file.Type().Id(fn.FnTypeName).Types(Id(genericKey).Any()).Func().Params(Id("x").Add(qualifiedTerm(fn.Term))).Id(genericKey)
     }
 }
 

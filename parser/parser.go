@@ -32,7 +32,14 @@ func Parse(unionPackageName, unionTypeName string) (core.UnionDetails, error) {
 	}
 
 	termNames, err := util.MapWithErr(terms, func(term *types.Term) (core.TermPath, error) {
+		pointer, isPointer := term.Type().Underlying().(*types.Pointer)
+
 		full := term.String()
+
+		if isPointer {
+			full = pointer.Elem().String()
+		}
+
 		pkg, local, splitErr := splitSourceType(full)
 
 		if splitErr != nil {
@@ -42,6 +49,7 @@ func Parse(unionPackageName, unionTypeName string) (core.UnionDetails, error) {
 		return core.TermPath{
 			Package: pkg,
 			Local:   local,
+			Pointer: isPointer,
 		}, nil
 	})
 

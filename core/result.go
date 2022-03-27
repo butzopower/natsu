@@ -9,4 +9,5 @@ type UnionDetails struct {
 type TermPath struct {
 	Local   string
 	Package string
+	Pointer bool
 }

@@ -12,7 +12,7 @@ func TestInstantiation(t *testing.T) {
     var tagOfB happypath.SumType
 
     tagOfA = happypath.SumTypeOf(happypath.A{})
-    tagOfB = happypath.SumTypeOf(nested.B{})
+    tagOfB = happypath.SumTypeOf(&nested.B{})
 
     require.NotNil(t, tagOfA)
     require.NotNil(t, tagOfB)
@@ -23,13 +23,13 @@ func TestExecutor(t *testing.T) {
 
     executor := happypath.SumTypeExecutor().
         WithA(func(a happypath.A) { calledWith = "a" }).
-        WithB(func(b nested.B) { calledWith = "b" })
+        WithB(func(b *nested.B) { calledWith = "b" })
 
     executor.Exec(happypath.SumTypeOf(happypath.A{}))
 
     require.Equal(t, "a", calledWith)
 
-    executor.Exec(happypath.SumTypeOf(nested.B{}))
+    executor.Exec(happypath.SumTypeOf(&nested.B{}))
 
     require.Equal(t, "b", calledWith)
 }
@@ -37,7 +37,7 @@ func TestExecutor(t *testing.T) {
 func TestMapper(t *testing.T) {
     mapper := happypath.SumTypeMapper[string]().
         WithA(func(a happypath.A) string { return "a" }).
-        WithB(func(b nested.B) string { return "b" })
+        WithB(func(b *nested.B) string { return "b" })
 
     mapper.Map(happypath.SumTypeOf(happypath.A{}))
 
@@ -50,7 +50,7 @@ func TestMapper(t *testing.T) {
     require.Equal(
         t,
         "b",
-        mapper.Map(happypath.SumTypeOf(nested.B{})),
+        mapper.Map(happypath.SumTypeOf(&nested.B{})),
     )
 }
 
