@@ -138,7 +138,7 @@ func buildExecFnContainerMetadata(
 func buildExecutorStructMetadata(
 	namespace string,
 ) execChainStruct {
-	id := fmt.Sprintf("executor%s", namespace)
+	id := fmt.Sprintf("Executor%s", namespace)
 	containerId := "fns"
 
 	return execChainStruct{

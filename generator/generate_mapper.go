@@ -135,7 +135,7 @@ func buildMapFnContainerMetadata(
 func buildMapperStructMetadata(
     namespace string,
 ) mapChainStruct {
-    id := fmt.Sprintf("mapper%s", namespace)
+    id := fmt.Sprintf("Mapper%s", namespace)
     containerId := "fns"
 
     return mapChainStruct{
